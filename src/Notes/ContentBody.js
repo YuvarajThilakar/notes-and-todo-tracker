@@ -1,14 +1,16 @@
 import React from "react";
 import AddModal from "../AddModal";
-import ShowNotes from "./ShowNotes";
+import ShowContent from "./ShowContent";
+import {getContent, getNotes, getToDos} from "../DBUtils/LocalStorageUtils";
 
-export default class NoteBody extends React.Component {
+export default class ContentBody extends React.Component {
     constructor(props) {
         super(props);
         this.props = props;
         const dataAsJSONString = `[{"key":"1", "title":"Note Title","subTitle":"Note's Sub-Title","content":"Actual note content"}, {"key":"2", "title":"Note 2 Title","subTitle":"2 Note's Sub-Title","content":"Actual note 2 content"}]`;
+        // const dataAsJSONObject = getContent(props.sectionData.typeKey);
         const dataAsJSONObject = JSON.parse(dataAsJSONString);
-        this.state = { notesAsJSONObject: dataAsJSONObject, searchKey: "" };
+        this.state = { dataAsJSONObject: dataAsJSONObject, searchKey: "" };
         this.handleSearchKeyChange = this.handleSearchKeyChange.bind(this);
     }
 
@@ -36,7 +38,7 @@ export default class NoteBody extends React.Component {
                             </nav>
                         </div>
                     </div>
-                    <ShowNotes notesAsJSONObject={this.state.notesAsJSONObject} searchKey={this.state.searchKey} />
+                    <ShowContent dataAsJSONObject={this.state.dataAsJSONObject} searchKey={this.state.searchKey} />
                 </div>
                 <AddModal />
             </div>

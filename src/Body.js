@@ -1,8 +1,9 @@
-import NoteBody from "./Notes/NoteBody";
+import ContentBody from "./Notes/ContentBody";
 
 export default function Body() {
 
     const notesSectionData = {
+        typeKey : "notes",
         sectionTitle : "Notes",
         addButtonName : "Add Notes",
         navContentID : "noteBody",
@@ -10,6 +11,7 @@ export default function Body() {
         navTabClassName : "tab-pane fade show active"
     };
     const todoSectionData = {
+        typeKey : "todos",
         sectionTitle : "ToDos",
         addButtonName : "Add ToDo",
         navContentID : "todoBody",
@@ -30,8 +32,8 @@ export default function Body() {
                 </div>
                 <div className="row">
                     <div class="col tab-content bg-white">
-                        <NoteBody sectionData={notesSectionData}/>
-                        <NoteBody sectionData={todoSectionData}/>
+                        <ContentBody sectionData={notesSectionData}/>
+                        <ContentBody sectionData={todoSectionData}/>
                     </div>
                 </div>
             </div>
