@@ -1,16 +1,22 @@
 import React from "react";
 import AddModal from "../AddModal";
 import ShowContent from "./ShowContent";
-import {getContent, getNotes, getToDos} from "../DBUtils/LocalStorageUtils";
+import { CategoryDropDown } from "../CategoryDropDown";
 
 export default class ContentBody extends React.Component {
     constructor(props) {
         super(props);
         this.props = props;
-        const dataAsJSONString = `[{"key":"1", "title":"Note Title","subTitle":"Note's Sub-Title","content":"Actual note content"}, {"key":"2", "title":"Note 2 Title","subTitle":"2 Note's Sub-Title","content":"Actual note 2 content"}]`;
+        const dataAsJSONString = `[{"key":"1", "title":"Note Title","subTitle":"Note's Sub-Title","content":"Actual note content","contentType":"Forte"}, {"key":"2", "title":"Note 2 Title","subTitle":"2 Note's Sub-Title","content":"Actual note 2 content","contentType":"SOTP"}]`;
         // const dataAsJSONObject = getContent(props.sectionData.typeKey);
+        const categories = ["Forte", "OTSP"];
         const dataAsJSONObject = JSON.parse(dataAsJSONString);
-        this.state = { dataAsJSONObject: dataAsJSONObject, searchKey: "" };
+        this.state = { 
+            dataAsJSONObject: dataAsJSONObject, 
+            searchKey: "" , 
+            categories : categories,
+            addModalId : "add" + props.sectionData.sectionTitle + "modal"
+        };
         this.handleSearchKeyChange = this.handleSearchKeyChange.bind(this);
     }
 
@@ -24,14 +30,23 @@ export default class ContentBody extends React.Component {
         return (
             <div className={this.props.sectionData.navTabClassName} id={this.props.sectionData.navContentID} role="tabpanel" aria-labelledby={this.props.sectionData.navItemID}>
                 <div className="container-fluid">
-                    <div className="row">
+                    {/* <div className="row">
                         <div className="col pb-2">
-                            <nav className="navbar navbar-white justify-content-between">
+                            <nav className="navbar navbar-white">
                                 <div className="h4">{this.props.sectionData.sectionTitle}</div>
+                            </nav>
+                        </div>
+                    </div> */}
+                    <div className="row">
+                        <div className="col">
+                            <nav className="navbar navbar-white justify-content-between">
                                 <div>
+                                    <button type="button" className="btn btn-outline-secondary mr-2" data-toggle="modal" data-target={"#" + this.state.addModalId}>{this.props.sectionData.addButtonName}</button>
+                                </div>
+                                <div className="d-inline">
                                     <form className="form-inline">
-                                        <button type="button" className="btn btn-outline-secondary m" data-toggle="modal" data-target="#noteAddModal">{this.props.sectionData.addButtonName}</button>
-                                        <input className="form-control my-auto mx-2" type="search" placeholder="Search title"
+                                        <CategoryDropDown categories={this.state.categories}/>
+                                        <input className="form-control my-auto" type="search" placeholder="Search title"
                                             aria-label="Search" value={this.state.searchKey} onChange={this.handleSearchKeyChange} />
                                     </form>
                                 </div>
@@ -40,7 +55,7 @@ export default class ContentBody extends React.Component {
                     </div>
                     <ShowContent dataAsJSONObject={this.state.dataAsJSONObject} searchKey={this.state.searchKey} />
                 </div>
-                <AddModal />
+                <AddModal categories={this.state.categories} sectionTitle={this.props.sectionData.sectionTitle} addModalId={this.state.addModalId}/>
             </div>
         );
     }

@@ -1,11 +1,11 @@
 import React from "react"
-import Content from './Note'
+import Content from './Content'
 
 export default function ShowContent(props) {
     const searchKey = props.searchKey;
     const dataList = props.dataAsJSONObject.map((data) => {
         if (data.title.includes(searchKey)) {
-            return <Content title={data.title} subTitle={data.subTitle} content={data.content} />
+            return <Content data={data}/>
         }
     });
 
