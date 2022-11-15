@@ -5,7 +5,7 @@ export default function Content(props) {
                 <div className="card-body">
                     <div className="h4 card-title">
                         {props.data.title}
-                        <span class="badge badge-pill badge-info float-right">{props.data.contentType}</span>
+                        <span class="badge badge-pill badge-info float-right">{props.data.category}</span>
                     </div>
                     <hr />
                     <p className="card-text">{props.data.content}</p>
