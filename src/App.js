@@ -5,7 +5,7 @@ import Body from "./Body";
 export default function App() {
     return (
         <div className="container-fluid">
-            <Header name="ToDo Tracker" />
+            <Header name="Welcome" />
             <Body />
         </div>
     );

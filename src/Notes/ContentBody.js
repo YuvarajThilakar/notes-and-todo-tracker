@@ -1,7 +1,7 @@
 import React from "react";
 import AddModal from "../AddModal";
 import ShowContent from "./ShowContent";
-import {CategoryDropDown} from "../CategoryDropDown";
+import { CategoryDropDown } from "../CategoryDropDown";
 
 export default class ContentBody extends React.Component {
     constructor(props) {
@@ -11,15 +11,16 @@ export default class ContentBody extends React.Component {
         // const dataAsJSONObject = getContent(props.sectionData.typeKey);
         const categories = ["Forte", "OTSP"];
         const dataAsJSONObject = JSON.parse(dataAsJSONString);
-        this.state = { 
-            dataAsJSONObject: dataAsJSONObject, 
-            searchKey: "" , 
-            categories : categories,
-            addModalId : "add" + props.sectionData.sectionTitle + "modal",
-            selectedCategory : ""
+        this.state = {
+            dataAsJSONObject: dataAsJSONObject,
+            searchKey: "",
+            categories: categories,
+            addModalId: "add" + props.sectionData.sectionTitle + "modal",
+            selectedCategory: ""
         };
         this.handleSearchKeyChange = this.handleSearchKeyChange.bind(this);
         this.elevateSelectedCategory = this.elevateSelectedCategory.bind(this);
+        this.handleFilterClear = this.handleFilterClear.bind(this);
     }
 
     handleSearchKeyChange(event) {
@@ -28,10 +29,17 @@ export default class ContentBody extends React.Component {
         this.setState({ searchKey: currentInput });
     }
 
-    elevateSelectedCategory(selectedCategory)
+    handleFilterClear()
     {
         this.setState({
-            selectedCategory : selectedCategory      
+            searchKey: "",
+            selectedCategory : ""
+        })
+    }
+
+    elevateSelectedCategory(selectedCategory) {
+        this.setState({
+            selectedCategory: selectedCategory
         })
         console.log(this);
     }
@@ -40,13 +48,6 @@ export default class ContentBody extends React.Component {
         return (
             <div className={this.props.sectionData.navTabClassName} id={this.props.sectionData.navContentID} role="tabpanel" aria-labelledby={this.props.sectionData.navItemID}>
                 <div className="container-fluid">
-                    {/* <div className="row">
-                        <div className="col pb-2">
-                            <nav className="navbar navbar-white">
-                                <div className="h4">{this.props.sectionData.sectionTitle}</div>
-                            </nav>
-                        </div>
-                    </div> */}
                     <div className="row">
                         <div className="col">
                             <nav className="navbar navbar-white justify-content-between">
@@ -55,17 +56,20 @@ export default class ContentBody extends React.Component {
                                 </div>
                                 <div className="d-inline">
                                     <form className="form-inline">
-                                        <CategoryDropDown elevateSelectedCategory={this.elevateSelectedCategory} categories={this.state.categories}/>
-                                        <input className="form-control my-auto" type="search" placeholder="Search title"
+                                        <CategoryDropDown selectedCategory={this.state.selectedCategory} elevateSelectedCategory={this.elevateSelectedCategory} categories={this.state.categories} />
+                                        <input className="form-control my-auto mr-2" type="search" placeholder="Search title"
                                             aria-label="Search" value={this.state.searchKey} onChange={this.handleSearchKeyChange} />
+                                        <button type="button" className="btn btn-outline-danger" onClick={this.handleFilterClear}>
+                                            <i className="bi bi-trash"></i>
+                                        </button>
                                     </form>
                                 </div>
                             </nav>
                         </div>
                     </div>
-                    <ShowContent dataAsJSONObject={this.state.dataAsJSONObject} searchKey={this.state.searchKey} selectedCategory={this.state.selectedCategory}/>
+                    <ShowContent dataAsJSONObject={this.state.dataAsJSONObject} searchKey={this.state.searchKey} selectedCategory={this.state.selectedCategory} />
                 </div>
-                <AddModal categories={this.state.categories} sectionTitle={this.props.sectionData.sectionTitle} addModalId={this.state.addModalId}/>
+                <AddModal categories={this.state.categories} sectionTitle={this.props.sectionData.sectionTitle} addModalId={this.state.addModalId} />
             </div>
         );
     }

@@ -3,7 +3,7 @@ export class CategoryDropDown extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedCategory: "",
+            selectedCategory: props.selectedCategory,
             dropButtonName: "Category",
             categories: props.categories
         }
